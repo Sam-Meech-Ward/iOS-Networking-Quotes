@@ -19,14 +19,7 @@ class ViewController: UIViewController {
     super.viewDidLoad()
     // Do any additional setup after loading the view.
     
-    networker.getImage { (data, error)  in
-      if let error = error {
-        print(error)
-        return
-      }
-      
-      self.imageView.image = UIImage(data: data!)
-    }
+    
   }
 
   @IBAction func randomQuote(_ sender: Any) {
@@ -37,7 +30,20 @@ class ViewController: UIViewController {
         return
       }
       
-      self.label.text = kanye?.quote
+      DispatchQueue.main.async {
+        self.label.text = kanye?.quote
+      }
+    }
+    
+    networker.getImage { (data, error)  in
+      if let error = error {
+        print(error)
+        return
+      }
+      
+      DispatchQueue.main.async {
+        self.imageView.image = UIImage(data: data!)
+      }
     }
     
   }
